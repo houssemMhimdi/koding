@@ -1,0 +1,11 @@
+{
+  "name": "ChatApp",
+  "version": "0.0.1",
+  "description": "poker app",
+  "dependencies": {
+    "express": "*",
+    "socket.io": "*",
+    "mongodb": "*",
+    "monk": "*"
+  }
+}
