@@ -1,0 +1,116 @@
+
+
+
+<link href="css/messanger.css" rel="stylesheet" type="text/css" />
+
+<div id="messages">
+
+    
+
+<div id="messagesId"></div> 
+</div>    
+<div id="chat-input">
+    <form action="">
+        <input id="chatInput" autocomplete="off" type="text" name="chat-text-input" class="chat-text-input" placeholder="Type here"/>
+        <button>Send</button>
+    </form>
+</div>   
+<script src="/socket.io/socket.io.js"></script>
+<script src="jquery-1.11.1.js"></script>
+<script>
+var getMsgData = io();
+
+    
+    function makeid(length)
+{
+    var idString = "";
+    var caracters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < length; i++ )
+        idString += caracters.charAt(Math.floor(Math.random() * caracters.length));
+
+    return idString;
+}
+username = makeid(5);  
+    
+    
+getMsgData.on('connect', function(){
+		getMsgData.emit('admitUser',  username);
+});    
+    
+$('form').submit(function(){
+if($('#chatInput').val()){    
+getMsgData.emit('message', $('#chatInput').val());
+}    
+$('#chatInput').val('');
+return false;
+
+});
+
+getMsgData.on('message', function(data){
+var msg = data.message;
+var player = data.username;
+//play audio on each message
+//    var audioElement = document.createElement('audio');
+//        audioElement.setAttribute('src', 'audio.mp3');
+//        audioElement.setAttribute('autoplay', 'autoplay');
+//        audioElement.load()
+//        $.get();
+    
+    
+        
+                
+if(player == username){
+coreClass = 'reciver';
+}    
+else{
+coreClass = 'sender';
+}
+//normal template     
+broadcastTemplate =  
+    '<div id="one-message" class="message '+coreClass+'">'+
+    '<div style="width: 100%; display: inline-block;">'+
+    '<div class="profile-image"><img src="img/'+data.profileImage+'"></div>'+
+    '<div class="message-container">'+
+        '<span><strong>'+player+'</strong></span>'+    
+        '<p>'+msg+'</p>'+
+        '<div class="date">'+data.date+'</div>'+    
+        '</div>'+
+    
+    '</div></div>'
+;    
+// get inside the old template
+keeptemplate =     
+        '<div style="width: 100%; display: inline-block;">'+
+        '<div class="profile-image"></div>'+
+        '<div class="message-container">'+
+        '<p>'+msg+'</p>'+
+        '<div class="date">'+data.date+'</div>'+    
+        '</div></div>'
+        
+;    
+    
+//Arrange messages template    
+if($('#one-message').length==0){
+$('#messages').append(broadcastTemplate);
+$('#messagesId').append('<div id="onemessageid" class="'+player+'"></div>');    
+}
+else{
+if(player==lastMessageId){
+$("#one-message:last-child").append(keeptemplate);
+$('#messagesId').append('<div id="onemessageid" class="'+player+'"></div>');        
+}
+else{
+$('#messages').append(broadcastTemplate);
+$('#messagesId').append('<div id="onemessageid" class="'+player+'"></div>');    
+}    
+    
+}
+
+lastMessageId = $("#onemessageid:last-child").attr('class');    
+console.log(lastMessageId);
+$("#messages").animate({ scrollTop: $(document).height()+10000 }, "slow");
+   
+}); 
+$('#messages').children().last()
+</script>
