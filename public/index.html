@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Koding</title>
+    <title>● StaggerIt | Messenger</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
-    <div class="conversations-container">
-        <div id="messages">
-            <div id="messagesId"></div> 
-        </div>        
-    </div>
+    <div class="pickusername"></div>
 
-    <div id="chat-input">
-        <form action="">
-            <input id="chatInput" autocomplete="off" type="text" name="chat-text-input" class="chat-text-input" placeholder="Type here"/>
-            <button>Send</button>
-        </form>
-    </div>
+    <div class="conversations-container"><div id="messages"><div id="messagesId"></div></div></div>
+    <div id="chat-input"></div>
  
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/jquery-1.11.1.js"></script>

@@ -1,48 +1,58 @@
 var getMsgData = io();
     
 function makeid(length){
-    var idString = "";
-    var caracters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var idString = "",
+    	caracters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     for( var i=0; i < length; i++ )
         idString += caracters.charAt(Math.floor(Math.random() * caracters.length));
 
     return idString;
-}
-
-username = makeid(5);  
+} 
   
 getMsgData.on('connect', function(){
-	getMsgData.emit('admitUser',  username);
+ 
+	$('.pickusername').append('<div style=" width: 100%; text-align: center; "><label>Pick a username and hit enter</label><input type="text" class="pickusername-field" /></div>')
+	$("#chat-input").append('<form action=""><input id="chatInput" autocomplete="off" type="text" name="chat-text-input" class="chat-text-input" placeholder="Type here"/><button></button></form>');
+
+	$('.pickusername-field').keyup(function(e){
+		if(e.which === 13){
+			username = $(this).val();
+			getMsgData.emit('admitUser',  username);
+			$('.pickusername').remove();
+		}
+	});
+
+	$('form').submit(function(){
+	    if($('#chatInput').val()){    
+	        getMsgData.emit('message', $('#chatInput').val());
+	    }    
+	    $('#chatInput').val('');
+	    return false;
+	});
+
 });    
     
-$('form').submit(function(){
-    if($('#chatInput').val()){    
-        getMsgData.emit('message', $('#chatInput').val());
-    }    
-    $('#chatInput').val('');
-    return false;
-});
+
 
 getMsgData.on('message', function(data){
-    var msg = data.message;
-    var player = data.username;
+    var msg = data.message,
+    	player = data.username;
 
                     
     if(player == username){
-    coreClass = 'reciver';
+    	coreClass = 'reciver';
     }    
     else{
-    coreClass = 'sender';
+    	coreClass = 'sender';
     }
-
 
     broadcastTemplate =  
         '<div id="one-message" class="message '+coreClass+'">'+
         '<div class="opening-message " style="width: 100%; display: inline-block;">'+
-        '<div class="profile-image"><img src="img/'+data.profileImage+'"></div>'+
+        '<div class="profile-image">'+player.substr(0,1)+'</div>'+
         '<div class="message-container">'+
-            '<span><strong>'+player+'</strong></span>'+    
+            '<span><strong class="_username">'+player+'</strong></span>'+    
             '<p>'+msg+'</p>'+
             '<div class="date">'+data.date+'</div>'+    
             '</div>'+
@@ -52,7 +62,7 @@ getMsgData.on('message', function(data){
 
     keeptemplate =     
             '<div style="width: 100%; display: inline-block;">'+
-            '<div class="profile-image"></div>'+
+            '<div class="profile-image" style="opacity:0;"></div>'+
             '<div class="message-container">'+
             '<p>'+msg+'</p>'+
             '<div class="date">'+data.date+'</div>'+    

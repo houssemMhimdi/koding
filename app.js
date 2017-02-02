@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-var port = process.env.PORT || 9100;
+var port = process.env.PORT || 9999;
 
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
@@ -21,9 +21,18 @@ var usernames = {};
 
 //Icons Map
 var map = {
-
+        "&lt;3": "\u2764\uFE0F",
+        "&lt;/3": "\uD83D\uDC94",
+        ":D": "\uD83D\uDE00",
+        ":)": "\uD83D\uDE03",
+        ";)": "\uD83D\uDE09",
+        ":(": "\uD83D\uDE12",
+        ":p": "\uD83D\uDE1B",
+        ";p": "\uD83D\uDE1C",
+        ":'(": "\uD83D\uDE22",
 };
-function ReplaceEmotios(text) {
+
+function esc_message(text) {
     var text = text;
     Object.keys(map).forEach(function (ico) {
         // escape special characters for regex
@@ -36,6 +45,10 @@ function ReplaceEmotios(text) {
     return text;
 }
 
+
+function escapeHTML(text) {
+    return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
 
 io.sockets.on('connection', function(socket){
 
@@ -58,20 +71,21 @@ function ProfileImage(){
     console.log('a user connected ');
     
     socket.on('disconnect', function(){
-    console.log('user disconnected');
+        console.log('user disconnected');
     });
     // tracking messages with console
     socket.on('message', function(data){
        
-    console.log('message:'+data );
+        console.log('message:'+data );
        
     });
+    
     //Send recive messages from clients 
     socket.on('message', function(data){ 
         var currentdate = new Date(); 
         // Sorted date variable
-        var text = data; 
-        var res =  ReplaceEmotios(text) ;
+        var text = escapeHTML(data);
+        var res =  esc_message(text) ;
         var datetime =  currentdate.getDate() + "/"+(currentdate.getMonth()+1)+","+currentdate.getHours()+":"+currentdate.getMinutes(); 
         io.emit('message', {username: socket.username,profileImage:ProfileImage,message: res,date: datetime,});
     }); 
