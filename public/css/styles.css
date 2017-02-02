@@ -1,0 +1,198 @@
+body{
+    margin:0;
+    padding:0;
+    font-family: Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {  
+    border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    background: #DDD; 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #CCC; 
+}
+
+#messages {
+    overflow: hidden;
+    border-bottom: 1px solid #FFF;
+    height: 89%;
+    overflow-y: scroll;
+    padding-bottom: 52px;
+    margin: 0;
+}
+#one-message {
+    font-size: 12px;
+    overflow: hidden;
+    padding: 8px;
+}
+.reciver .profile-image {
+    float: left;
+}
+.sender .profile-image {
+    float: right;
+}
+.reciver .profile-image,
+.sender .profile-image{
+    width: 48px;
+    height: 48px;
+    overflow: hidden;    
+}
+
+.reciver .profile-image img {
+    border: 0;
+}
+.sender .profile-image img, 
+.reciver .profile-image img {
+    width: 40px;
+    border-radius: 100%;
+    border: 4px solid #00a98f;
+}
+
+
+
+.reciver .message-container {
+    float: left;
+}
+
+.sender .message-container {
+    float: right;
+}
+.reciver .message-container,
+.sender .message-container {
+    max-width: 450px;
+    margin-bottom: 2px;
+    padding: 0 8px;
+    font-size: 16px;
+    font-weight: 400;
+}
+.reciver .message-container span strong {
+    font-family: arial;
+    font-size: 12px;
+    font-weight: 900;
+    color: #123181;
+}
+.reciver .message-container p,
+.sender .message-container p  {
+    color: rgb(255, 255, 255);
+    background: #00a98f;
+    margin: 0;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    line-height: 1;
+}
+
+.reciver .date {
+    float: right;
+}
+
+.sender .date {
+    float: left;
+}
+.reciver .date,
+.sender .date{
+    color: #ccc;
+    font-size: 12px;
+    margin-top: 4px;
+    overflow: hidden;
+    height: 0;
+    transition: .2s ease-out;
+}
+
+
+.reciver .date.active,
+.sender .date.active{
+    height: 15px;
+}
+
+.sender .message-container span strong {
+    font-family: arial;
+    font-size: 12px;
+    font-weight: 900;
+    color: #123181;
+}
+
+.reciver .message-container span, 
+.sender .message-container span {
+    margin-bottom: 5px;
+    display: block;
+}
+
+
+
+
+.chat-text-input{
+    width: 90%;
+    margin: 0;
+    float: left;
+    border: 0;
+    padding: 10px;
+    font-size: 14px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: #EBEBEB;
+    -webkit-font-smoothing: subpixel-antialiased;
+    box-sizing: border-box;
+}
+#chat-input {
+    -webkit-transition:0.4s;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    /* opacity: 0.5; */
+    padding: 0;
+    height: 100px;
+}
+.chat-text-input:focus {
+    outline: 1px;
+}
+#chat-input:hover {
+    -webkit-transition:0.9s;
+    opacity: 1;
+    
+}
+#chat-input button {
+    border: 0;
+    background: rgb(36, 81, 161);
+    color: white;
+    width: 10%;
+    -webkit-transition: 0.6;
+    padding: 11px;
+    text-transform: capitalize;
+    font-weight: 900;
+    font-size: 12px;
+    -webkit-font-smoothing: antialiased;
+    cursor: pointer;
+    margin-top: 0px;
+    box-sizing: border-box;
+}
+
+.conversations-container {
+    height: calc(100vh - 100px);
+}
+
+.message.reciver .opening-message .message-container p {
+    border-top-left-radius: 2px;
+}
+
+.message.sender .opening-message .message-container p {
+    border-top-right-radius: 0px;
+}
+
+.message.sender .message-container span {
+    text-align: right;
+}
+
+#chat-input form {
+    position: absolute;
+    width: 100%;
+    bottom: 5px;
+}
