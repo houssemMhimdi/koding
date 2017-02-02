@@ -160,7 +160,7 @@ body{
     border-radius: 100%;
     background: rgb(0, 136, 115);
     color: white;
-    padding: 11px;
+    padding: 0;
     text-transform: capitalize;
     font-weight: 900;
     font-size: 12px;
@@ -173,6 +173,7 @@ body{
     margin-top: -15px;
     width: 30px;
     height: 30px;
+    outline: none;
 }
 
 .conversations-container {

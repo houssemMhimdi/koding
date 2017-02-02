@@ -64,7 +64,13 @@ function ProfileImage(){
 		socket.username = username;
 		usernames[username] = username;
         console.log('username'+username); 
-        console.log('profile'+ProfileImage); 
+        console.log('profile'+ProfileImage);
+        io.emit('message', {
+                username: "Staggerit",
+                profileImage:ProfileImage,
+                message: "<small><u><b>"+username+"</b> Joined the conversation</u></small>",
+                date: '',
+        });
 	});
     
     
@@ -79,7 +85,7 @@ function ProfileImage(){
         console.log('message:'+data );
        
     });
-    
+
     //Send recive messages from clients 
     socket.on('message', function(data){ 
         var currentdate = new Date(); 
