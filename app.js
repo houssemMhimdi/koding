@@ -10,17 +10,9 @@ server.listen(port, function () {
 
 app.use(express.static(__dirname + '/public'));
 
-
-    //Number of users variable
-    var numUsers = 0;
-    //get date variable
-    var date = new Date();
-
-    var usernames = {};
-    //connecting to a socket 
-
-    //Icons Map
-    var map = {
+    var date = new Date(),
+        usernames = {},
+        map = {
             "&lt;3": "\u2764\uFE0F",
             "&lt;/3": "\uD83D\uDC94",
             ":D": "\uD83D\uDE00",
@@ -51,22 +43,12 @@ app.use(express.static(__dirname + '/public'));
 
     io.sockets.on('connection', function(socket){
 
-        function ProfileImage(){
-            ProfilesImages = ['profile.png','profile1.png','profile2.png'];
-            randImage = ProfilesImages[Math.floor(Math.random() * ProfilesImages.length)];
-            return randImage;
-        }
-        ProfileImage = ProfileImage();
-
-
     	socket.on('admitUser', function(username){
     		socket.username = username;
     		usernames[username] = username;
             console.log('username'+username); 
-            console.log('profile'+ProfileImage);
             io.emit('message', {
                     username: "Staggerit",
-                    profileImage:ProfileImage,
                     message: "<small><u><b>"+username+"</b> Joined the conversation</u></small>",
                     date: '',
             });
@@ -79,23 +61,21 @@ app.use(express.static(__dirname + '/public'));
             console.log('user disconnected');
         });
 
-        // Showing message in console.
+        //show message in console.
         socket.on('message', function(data){
            
             console.log('message:'+data );
            
         });
 
-        //Send recive messages from clients 
+        //Send & receive messages from clients 
         socket.on('message', function(data){ 
-            var currentdate = new Date(); 
-            // Sorted date variable
-            var text = escapeHTML(data);
-            var res =  esc_message(text) ;
-            var datetime =  currentdate.getDate() + "/"+(currentdate.getMonth()+1)+","+currentdate.getHours()+":"+currentdate.getMinutes(); 
+            var currentdate = new Date(),
+                text = escapeHTML(data),
+                res =  esc_message(text) ,
+                datetime =  currentdate.getDate() + "/"+(currentdate.getMonth()+1)+","+currentdate.getHours()+":"+currentdate.getMinutes(); 
             io.emit('message', {
                 username: socket.username,
-                profileImage:ProfileImage,
                 message: res,
                 date: datetime,
             });

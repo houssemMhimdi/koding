@@ -1,7 +1,4 @@
-var getMsgData = io();
-console.log(getMsgData.on('connecting',function(){
-	console.log('connecting');
-}));    
+var getMsgData = io();   
 function makeid(length){
     var idString = "",
     	caracters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
