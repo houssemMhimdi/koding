@@ -1,5 +1,7 @@
 var getMsgData = io();
-    
+console.log(getMsgData.on('connecting',function(){
+	console.log('connecting');
+}));    
 function makeid(length){
     var idString = "",
     	caracters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -38,7 +40,6 @@ getMsgData.on('connect', function(){
 getMsgData.on('message', function(data){
     var msg = data.message,
     	player = data.username;
-
                     
     if(player == username){
     	coreClass = 'reciver';
